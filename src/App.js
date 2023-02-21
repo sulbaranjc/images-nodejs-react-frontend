@@ -2,7 +2,8 @@ import React, {Fragment, useState, useEffect} from 'react';
 import axios from 'axios';
 import Modal from 'react-modal'
 
-const API_URL_SERVER = "http://localhost:3310/";
+ const API_URL_SERVER = "http://localhost:3310/";
+//const API_URL_SERVER = "http://192.168.1.147:3310/";
 const API_TABLA_CONTROLLER = "images/";
 const API_TOTAL_CONTROLLER = API_URL_SERVER+API_TABLA_CONTROLLER;
 function App() {
@@ -33,7 +34,6 @@ const modalHandler = (isOpen,img) => {
     const res = await axios.get(API_TOTAL_CONTROLLER)
     const sortedImages = res.data.sort().reverse()
     setimageList(sortedImages)
-    // console.log(res.data)
     
   }
 
@@ -55,7 +55,6 @@ const modalHandler = (isOpen,img) => {
     })
     .then (res => res.text())
     .then (res => {
-      // console.log(res)
       setListUpdate(true)
     })
     .catch(err =>{
