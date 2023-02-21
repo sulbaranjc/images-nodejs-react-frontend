@@ -2,6 +2,9 @@ import React, {Fragment, useState, useEffect} from 'react';
 import axios from 'axios';
 import Modal from 'react-modal'
 
+const API_URL_SERVER = "http://localhost:3310/";
+const API_TABLA_CONTROLLER = "images/";
+const API_TOTAL_CONTROLLER = API_URL_SERVER+API_TABLA_CONTROLLER;
 function App() {
 
   const [file, setFile] = useState(null)
@@ -27,7 +30,7 @@ const modalHandler = (isOpen,img) => {
   
 
   const cargarImagenes = async() => {
-    const res = await axios.get('http://localhost:3300/images/')
+    const res = await axios.get(API_TOTAL_CONTROLLER)
     const sortedImages = res.data.sort().reverse()
     setimageList(sortedImages)
     // console.log(res.data)
@@ -46,7 +49,7 @@ const modalHandler = (isOpen,img) => {
 
   const formdata = new FormData()
     formdata.append('image',file)
-    fetch('http://localhost:3300/images/',{
+    fetch(API_TOTAL_CONTROLLER,{
       method: 'POST',
       body: formdata
     })
@@ -71,7 +74,7 @@ const deleteHandler = async() => {
     imageID = imageID[1].split('.')
     imageID = parseInt(imageID[0]) 
     // console.log(imageID)
-    const res = await axios.delete('http://localhost:3300/images/'+imageID)
+    const res = await axios.delete(API_TOTAL_CONTROLLER+imageID)
     console.log(res.data)
     setModalIsOpen(false)
 
@@ -101,7 +104,7 @@ const deleteHandler = async() => {
       <div className="container mt-3 d-flex flex-wrap justify-content-center ">
         {imageList.map(image =>(
         <div key = {image} className="card m-2">
-          <img className='card-img-top' src={"http://localhost:3300/" + image} alt="..." style={{heigth :"200px", width : "300px"}}/>
+          <img className='card-img-top' src={API_URL_SERVER + image} alt="..." style={{heigth :"200px", width : "300px"}}/>
           <div className='card-body d-flex align-items-end'>
             <button onClick={() => modalHandler(true,image)} className='btn btn-dark col-12'>Ver</button>
           </div>
@@ -111,7 +114,7 @@ const deleteHandler = async() => {
 
    <Modal style={{content : {right: "20%", left: "20%", top: "20%", bottom: "20%"}}} isOpen={modalIsOpen} onRequestClose={()=> setModalIsOpen(false)}>
     <div className="card">
-      <img className="mx-auto" src={"http://localhost:3300/" + currentImage} alt="..."  style={{heigth :"300px", width : "400px"}}/>
+      <img className="mx-auto" src={API_URL_SERVER + currentImage} alt="..."  style={{heigth :"300px", width : "400px"}}/>
       <div className="card-body">
       <button onClick={() => deleteHandler()}  className='btn btn-danger col-12'>Delete</button>
       </div>
