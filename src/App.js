@@ -32,12 +32,11 @@ const modalHandler = (isOpen,img) => {
   
 
   const cargarImagenes = async() => {
-    const res = await axios.get(API_TOTAL_CONTROLLER)
-    const sortedImages = res.data.sort().reverse()
+    const response = await axios.get(API_TOTAL_CONTROLLER)
+    // sort and reverse images
+    const sortedImages = response.data.sort().reverse()
     setimageList(sortedImages)
-    
   }
-
   const selectedhandler = e =>{
     setFile(e.target.files[0])
   }
